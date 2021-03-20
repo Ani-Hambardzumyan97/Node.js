@@ -1,12 +1,25 @@
-var fs = require("fs");
-var os = require("os"); 
-var rand=require('random');
+const { Transform } = require('stream');
 
-var fileName=rand.int(1e7,1e8);
-var data=os.cpus().length;
+class RemoveSpecialChars extends Transform {
+
+  constructor(char) {
+    super();
+    this.replaceChar = char;
+  }
+
+  _transform(chunk, encoding, callback) {
+      const transformChunk = chunk.toString()
+        .replace(/[$&+,:;=?@#|'<>.-^*()%!]/g, "");
+      this.push(transformChunk)
+      callback();
+  }
 
 
-   fs.writeFile(fileName+'.txt', data, ()=>{
-   	console.log('written')
-   }); 
 
+}
+
+var sStream = new RemoveSpecialChars('Hello!:-)');
+
+process.stdin
+  .pipe(sStream)
+  .pipe(process.stdout);
