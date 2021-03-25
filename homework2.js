@@ -1,62 +1,55 @@
-const fs = require('fs');
+var http = require('http');
+var querystring = require('querystring');
+const fs =require('fs');
+// Create a server
+http.createServer( function (req, res) {  
+   // Parse the request containing file name
 
-const readableStream = fs.createReadStream('./homework2.txt',{
-    highWaterMark: 1
-});
-const writeStream =fs.createWriteStream('homework2arm.txt');
-var engArm={
-        a : 'ա',
-		b : 'բ',
-		g : 'գ',
-		d : 'դ',
-		e : 'ե',
-		z : 'զ',
-		e : 'է',
-		y : 'ը',
-		t : 'թ',
-		i : 'ի',
-		l : 'լ',
-		x : 'խ',
-		k : 'կ',
-		h : 'հ',
-		m : 'մ',
-		y : 'յ',
-		n : 'ն',
-		o : 'ո',
-		p : 'պ',
-		j : 'ջ',
-		r : 'ռ',
-		s : 'ս',
-		v : 'վ',
-		t : 'տ',
-		r : 'ր',
-		c : 'ց',
-		w : 'ւ',
-		p : 'փ',
-		q : 'ք',
-		o : 'օ',
-		f : 'ֆ',
-		u : 'ու',
-		
-		}
+     if (req.method === 'GET') {
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString(); 
+    });
+    req.on('end', () => {
+        var name=querystring.parse(body).name;
 
-readableStream.setEncoding('UTF8')
+     if(name=="sunny"){
+     	var content= fs.readFileSync(name+'.txt');
+       res.end(content)
+   }else{
+   	res.writeHead(200,{'content-type':'text/html'});
+    		res.end(`<form method="POST">
+	<p>
+		Name<input type="" name="name">
+	</p>
+	<p>
+	
+	<input type="submit" name="" value="Send">
+	
+</form>`)
+   }
+       
 
-readableStream.on('data', (chunk) => {
-	var index=chunk.toString().toLowerCase()
-	if(engArm[index]==undefined){
-		writeStream.write(' ')
-	}else{
-		
-		writeStream.write(engArm[index])
-	}
-   
+    });
+    }else{
+    	      	res.writeHead(200,{'content-type':'text/html'});
+    		res.end(`<form method="POST">
+	<p>
+		Name<input type="" name="name">
+	</p>
+	<p>
+	
+	<input type="submit" name="" value="Send">
+	
+</form>`)
+    }
+
+
+
+
+
  
-});
+}).listen(3000);
 
-readableStream.on('end', () => {
-    console.log('DONE');
-});
-
-
-  
+// Console will print the message
+console.log('Server running at http://127.0.0.1:3000/')

@@ -1,0 +1,23 @@
+{
+  "name": "lesson17homework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "homework1.js",
+  "dependencies": {
+    "random": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ani-Hambardzumyan97/Node.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ani-Hambardzumyan97/Node.js/issues"
+  },
+  "homepage": "https://github.com/Ani-Hambardzumyan97/Node.js#readme"
+}
